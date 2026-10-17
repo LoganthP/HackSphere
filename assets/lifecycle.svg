@@ -1,0 +1,61 @@
+<svg width="1200" height="230" viewBox="0 0 1200 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hackathon lifecycle: Draft, Announced, Registration open, Live, Judging, Completed">
+  <defs>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#202747" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="track" x1="0" x2="1">
+      <stop offset="0" stop-color="#9AA3C7"/>
+      <stop offset="0.2" stop-color="#FFC857"/>
+      <stop offset="0.4" stop-color="#3DCFAE"/>
+      <stop offset="0.6" stop-color="#4285FF"/>
+      <stop offset="0.8" stop-color="#FF7890"/>
+      <stop offset="1" stop-color="#7058F5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="230" rx="24" fill="#F8FAFF"/>
+  <rect x="110" y="86" width="980" height="8" rx="4" fill="url(#track)" opacity="0.5"/>
+
+  <!-- travelling pulse -->
+  <circle cy="90" r="9" fill="#FFFFFF" stroke="#202747" stroke-width="3">
+    <animate attributeName="cx" values="110;1090" dur="9s" repeatCount="indefinite"/>
+  </circle>
+
+  <g font-family="'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <g transform="translate(110 90)">
+      <circle r="30" fill="#9AA3C7" filter="url(#sh)"><animate attributeName="r" values="30;33;30" dur="3s" begin="0s" repeatCount="indefinite"/></circle>
+      <text y="9" font-size="26">📝</text>
+      <text y="68" font-size="17" font-weight="700" fill="#202747">Draft</text>
+      <text y="90" font-size="13" fill="#5B6490">private</text>
+    </g>
+    <g transform="translate(306 90)">
+      <circle r="30" fill="#FFC857" filter="url(#sh)"><animate attributeName="r" values="30;33;30" dur="3s" begin="0.5s" repeatCount="indefinite"/></circle>
+      <text y="9" font-size="26">📣</text>
+      <text y="68" font-size="17" font-weight="700" fill="#202747">Announced</text>
+      <text y="90" font-size="13" fill="#5B6490">visible to everyone</text>
+    </g>
+    <g transform="translate(502 90)">
+      <circle r="30" fill="#3DCFAE" filter="url(#sh)"><animate attributeName="r" values="30;33;30" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
+      <text y="9" font-size="26">🎟️</text>
+      <text y="68" font-size="17" font-weight="700" fill="#202747">Registration open</text>
+      <text y="90" font-size="13" fill="#5B6490">teams register</text>
+    </g>
+    <g transform="translate(698 90)">
+      <circle r="30" fill="#4285FF" filter="url(#sh)"><animate attributeName="r" values="30;33;30" dur="3s" begin="1.5s" repeatCount="indefinite"/></circle>
+      <text y="9" font-size="26">⚡</text>
+      <text y="68" font-size="17" font-weight="700" fill="#202747">Live now</text>
+      <text y="90" font-size="13" fill="#5B6490">build and submit</text>
+    </g>
+    <g transform="translate(894 90)">
+      <circle r="30" fill="#FF7890" filter="url(#sh)"><animate attributeName="r" values="30;33;30" dur="3s" begin="2s" repeatCount="indefinite"/></circle>
+      <text y="9" font-size="26">⚖️</text>
+      <text y="68" font-size="17" font-weight="700" fill="#202747">Judging</text>
+      <text y="90" font-size="13" fill="#5B6490">rubric scoring</text>
+    </g>
+    <g transform="translate(1090 90)">
+      <circle r="30" fill="#7058F5" filter="url(#sh)"><animate attributeName="r" values="30;33;30" dur="3s" begin="2.5s" repeatCount="indefinite"/></circle>
+      <text y="9" font-size="26">🏆</text>
+      <text y="68" font-size="17" font-weight="700" fill="#202747">Completed</text>
+      <text y="90" font-size="13" fill="#5B6490">results published</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg width="1200" height="120" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" role="presentation">
+  <defs>
+    <linearGradient id="w" x1="0" x2="1">
+      <stop offset="0" stop-color="#7058F5"/>
+      <stop offset="0.5" stop-color="#4285FF"/>
+      <stop offset="1" stop-color="#3DCFAE"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#w)" fill-opacity="0.35" d="M0 60 C200 20 400 100 600 60 S1000 20 1200 60 V120 H0Z">
+    <animate attributeName="d" dur="7s" repeatCount="indefinite"
+      values="M0 60 C200 20 400 100 600 60 S1000 20 1200 60 V120 H0Z;
+              M0 60 C200 100 400 20 600 60 S1000 100 1200 60 V120 H0Z;
+              M0 60 C200 20 400 100 600 60 S1000 20 1200 60 V120 H0Z"/>
+  </path>
+  <path fill="url(#w)" fill-opacity="0.6" d="M0 80 C250 50 450 110 650 80 S1000 50 1200 80 V120 H0Z">
+    <animate attributeName="d" dur="5s" repeatCount="indefinite"
+      values="M0 80 C250 50 450 110 650 80 S1000 50 1200 80 V120 H0Z;
+              M0 80 C250 110 450 50 650 80 S1000 110 1200 80 V120 H0Z;
+              M0 80 C250 50 450 110 650 80 S1000 50 1200 80 V120 H0Z"/>
+  </path>
+  <path fill="url(#w)" d="M0 100 C300 85 500 115 700 100 S1000 85 1200 100 V120 H0Z"/>
+</svg>
