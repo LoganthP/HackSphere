@@ -1,0 +1,189 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/figtree";
+
+/* Light is the product. Dark is an optional, reduced variant toggled from the profile menu. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --canvas: #f8faff;
+  --surface: #ffffff;
+  --surface-2: #f1f3ff;
+  --ink: #202747;
+  --ink-soft: #565d82;
+  --line: #e3e6f5;
+  --glass: rgb(255 255 255 / 0.64);
+  --glass-line: rgb(255 255 255 / 0.85);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --canvas: #161a33;
+  --surface: #1e2345;
+  --surface-2: #272d58;
+  --ink: #eef0ff;
+  --ink-soft: #aab0d6;
+  --line: #333a6b;
+  --glass: rgb(30 35 69 / 0.7);
+  --glass-line: rgb(255 255 255 / 0.08);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+}
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Figtree Variable", "Segoe UI", system-ui, sans-serif;
+
+  /* Brand palette from the HackSphere brief */
+  --color-violet: #7058f5;
+  --color-violet-deep: #5a41e6;
+  --color-violet-soft: #ece8ff;
+  --color-blue: #4285ff;
+  --color-blue-deep: #1f5fd6;
+  --color-blue-soft: #e3edff;
+  --color-coral: #ff7890;
+  --color-coral-deep: #c9304f;
+  --color-coral-soft: #ffe6eb;
+  --color-sun: #ffc857;
+  --color-sun-deep: #8a5a00;
+  --color-sun-soft: #fff4d9;
+  --color-mint: #3dcfae;
+  --color-mint-deep: #0f7a63;
+  --color-mint-soft: #ddf8f1;
+  --color-navy: #202747;
+
+  --radius-tile: 1.75rem;
+  --radius-panel: 1.25rem;
+  --radius-control: 0.875rem;
+
+  --shadow-lift: 0 18px 40px -22px rgb(80 64 200 / 0.45);
+  --shadow-soft: 0 10px 30px -18px rgb(32 39 71 / 0.35);
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-violet);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: #ffc85799;
+  }
+}
+
+/* Soft, static colour field behind the app — never animated. */
+.canvas-field {
+  background:
+    radial-gradient(40rem 28rem at 8% -5%, rgb(112 88 245 / 0.14), transparent 70%),
+    radial-gradient(34rem 26rem at 100% 0%, rgb(61 207 174 / 0.14), transparent 70%),
+    radial-gradient(30rem 24rem at 70% 110%, rgb(255 200 87 / 0.16), transparent 70%),
+    var(--canvas);
+}
+[data-theme="dark"] .canvas-field {
+  background:
+    radial-gradient(40rem 28rem at 8% -5%, rgb(112 88 245 / 0.22), transparent 70%),
+    radial-gradient(34rem 26rem at 100% 0%, rgb(61 207 174 / 0.1), transparent 70%),
+    var(--canvas);
+}
+
+/* Glassmorphism — navigation, overlays, featured cards */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid var(--glass-line);
+}
+
+/* Claymorphism — achievements, avatars, playful tiles. Set --clay to the base colour. */
+.clay {
+  background: var(--clay, var(--color-violet));
+  box-shadow:
+    inset 6px 8px 14px rgb(255 255 255 / 0.45),
+    inset -6px -10px 16px rgb(0 0 0 / 0.12),
+    0 18px 30px -16px color-mix(in srgb, var(--clay, #7058f5) 70%, transparent);
+}
+
+/* Neumorphism — tactile controls only */
+.neu {
+  background: var(--surface);
+  box-shadow:
+    4px 4px 10px rgb(32 39 71 / 0.08),
+    -4px -4px 10px rgb(255 255 255 / 0.9);
+}
+.neu-pressed {
+  box-shadow:
+    inset 3px 3px 7px rgb(32 39 71 / 0.12),
+    inset -3px -3px 7px rgb(255 255 255 / 0.85);
+}
+[data-theme="dark"] .neu {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+}
+[data-theme="dark"] .neu-pressed {
+  box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.4);
+}
+
+.tile {
+  border-radius: var(--radius-tile);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.hover-lift {
+  transition:
+    transform 0.25s var(--ease-spring),
+    box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hover-lift:hover {
+    transform: none;
+  }
+}

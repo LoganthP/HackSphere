@@ -1,0 +1,14 @@
+{
+  "name": "hacksphere",
+  "private": true,
+  "description": "HackSphere — Next-Generation Hackathon Management Platform",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "setup": "npm --prefix server run setup",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server run start",
+    "test": "npm --prefix server test && npm --prefix client test"
+  }
+}

@@ -1,0 +1,383 @@
+// HackSphere data model — SQLite via Prisma 7 (driver adapter: better-sqlite3)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum PlatformRole {
+  PARTICIPANT
+  ORGANIZER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum EventStage {
+  DRAFT
+  PUBLISHED
+  REGISTRATION_OPEN
+  IN_PROGRESS
+  JUDGING
+  COMPLETED
+}
+
+enum EventMode {
+  ONLINE
+  OFFLINE
+  HYBRID
+}
+
+enum EventRoleType {
+  ORGANIZER
+  JUDGE
+}
+
+enum InviteKind {
+  INVITE
+  REQUEST
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum EvaluationStatus {
+  DRAFT
+  SUBMITTED
+}
+
+model User {
+  id                String       @id @default(cuid())
+  name              String
+  email             String       @unique
+  passwordHash      String
+  role              PlatformRole @default(PARTICIPANT)
+  status            UserStatus   @default(ACTIVE)
+  organizerVerified Boolean      @default(false)
+  college           String?
+  bio               String?
+  skills            String?
+  avatarColor       String       @default("#7058F5")
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  sessions        Session[]
+  resetTokens     PasswordResetToken[]
+  organizedEvents Event[]              @relation("EventOrganizer")
+  eventRoles      EventRole[]
+  bookmarks       Bookmark[]
+  ledTeams        Team[]               @relation("TeamLeader")
+  memberships     TeamMember[]
+  sentInvitations Invitation[]         @relation("InvitationSender")
+  recvInvitations Invitation[]         @relation("InvitationRecipient")
+  assignments     JudgeAssignment[]
+  evaluations     Evaluation[]
+  announcements   Announcement[]
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+}
+
+model Session {
+  id        String   @id // SHA-256 hash of the cookie token
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model PasswordResetToken {
+  id        String    @id // SHA-256 hash of the token
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+}
+
+model Event {
+  id                   String     @id @default(cuid())
+  slug                 String     @unique
+  title                String
+  tagline              String
+  description          String
+  category             String
+  mode                 EventMode  @default(ONLINE)
+  location             String?
+  stage                EventStage @default(DRAFT)
+  registrationClosesAt DateTime
+  startsAt             DateTime
+  submissionDeadline   DateTime
+  endsAt               DateTime
+  minTeamSize          Int        @default(1)
+  maxTeamSize          Int        @default(4)
+  maxTeams             Int?
+  eligibility          String?
+  rules                String?
+  prizes               String?
+  accentColor          String     @default("#7058F5")
+  resultsPublished     Boolean    @default(false)
+  organizerId          String
+  organizer            User       @relation("EventOrganizer", fields: [organizerId], references: [id])
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  roles         EventRole[]
+  bookmarks     Bookmark[]
+  problems      ProblemStatement[]
+  teams         Team[]
+  registrations Registration[]
+  criteria      Criterion[]
+  assignments   JudgeAssignment[]
+  evaluations   Evaluation[]
+  announcements Announcement[]
+}
+
+model EventRole {
+  id      String        @id @default(cuid())
+  eventId String
+  event   Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId  String
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role    EventRoleType
+
+  @@unique([eventId, userId, role])
+}
+
+model Bookmark {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, eventId])
+}
+
+model ProblemStatement {
+  id             String     @id @default(cuid())
+  code           String
+  eventId        String
+  event          Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  title          String
+  category       String
+  difficulty     Difficulty @default(MEDIUM)
+  description    String
+  expectedOutput String
+  resources      String?
+  selectionLimit Int?
+  createdAt      DateTime   @default(now())
+
+  teams Team[]
+
+  @@unique([eventId, code])
+}
+
+model Team {
+  id                String            @id @default(cuid())
+  eventId           String
+  event             Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name              String
+  pitch             String?
+  lookingForMembers Boolean           @default(true)
+  leaderId          String
+  leader            User              @relation("TeamLeader", fields: [leaderId], references: [id])
+  problemId         String?
+  problem           ProblemStatement? @relation(fields: [problemId], references: [id], onDelete: SetNull)
+  deadlineExtension DateTime?
+  createdAt         DateTime          @default(now())
+
+  members      TeamMember[]
+  invitations  Invitation[]
+  registration Registration?
+  project      Project?
+  assignments  JudgeAssignment[]
+  evaluations  Evaluation[]
+
+  @@unique([eventId, name])
+}
+
+model TeamMember {
+  id       String   @id @default(cuid())
+  teamId   String
+  team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId  String // denormalised so a person can only be on one team per hackathon
+  isLeader Boolean  @default(false)
+  joinedAt DateTime @default(now())
+
+  @@unique([eventId, userId])
+}
+
+model Invitation {
+  id          String       @id @default(cuid())
+  teamId      String
+  team        Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  senderId    String
+  sender      User         @relation("InvitationSender", fields: [senderId], references: [id], onDelete: Cascade)
+  recipientId String
+  recipient   User         @relation("InvitationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  kind        InviteKind
+  status      InviteStatus @default(PENDING)
+  message     String?
+  createdAt   DateTime     @default(now())
+  respondedAt DateTime?
+
+  @@index([recipientId, status])
+}
+
+model Registration {
+  id         String             @id @default(cuid())
+  eventId    String
+  event      Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  teamId     String             @unique
+  team       Team               @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  status     RegistrationStatus @default(PENDING)
+  note       String?
+  createdAt  DateTime           @default(now())
+  reviewedAt DateTime?
+}
+
+model Project {
+  id          String       @id @default(cuid())
+  teamId      String       @unique
+  team        Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  title       String
+  summary     String
+  techStack   String?
+  repoUrl     String?
+  demoUrl     String?
+  slidesUrl   String?
+  videoUrl    String?
+  milestones  String       @default("[]") // JSON array of { id, label, done }
+  updatedAt   DateTime     @updatedAt
+  submissions Submission[]
+}
+
+model Submission {
+  id             String       @id @default(cuid())
+  projectId      String
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version        Int
+  title          String
+  summary        String
+  techStack      String?
+  repoUrl        String?
+  demoUrl        String?
+  slidesUrl      String?
+  videoUrl       String?
+  attachmentPath String?
+  attachmentName String?
+  isFinal        Boolean      @default(false)
+  submittedById  String
+  submittedAt    DateTime     @default(now())
+  evaluations    Evaluation[]
+
+  @@unique([projectId, version])
+}
+
+model Criterion {
+  id          String  @id @default(cuid())
+  eventId     String
+  event       Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  weight      Float   @default(1)
+  position    Int     @default(0)
+}
+
+model JudgeAssignment {
+  id           String   @id @default(cuid())
+  eventId      String
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  judgeId      String
+  judge        User     @relation(fields: [judgeId], references: [id], onDelete: Cascade)
+  teamId       String
+  team         Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  conflict     Boolean  @default(false)
+  conflictNote String?
+  createdAt    DateTime @default(now())
+
+  @@unique([judgeId, teamId])
+}
+
+model Evaluation {
+  id           String           @id @default(cuid())
+  eventId      String
+  event        Event            @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  teamId       String
+  team         Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  submissionId String
+  submission   Submission       @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  judgeId      String
+  judge        User             @relation(fields: [judgeId], references: [id], onDelete: Cascade)
+  scores       String // JSON: { [criterionId]: rating 0-10 }
+  feedback     String           @default("")
+  score        Float            @default(0) // weighted score on a 0-10 scale
+  status       EvaluationStatus @default(DRAFT)
+  updatedAt    DateTime         @updatedAt
+  submittedAt  DateTime?
+
+  @@unique([judgeId, teamId])
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  pinned    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  title     String
+  body      String
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action     String
+  targetType String
+  targetId   String?
+  meta       String?
+  createdAt  DateTime @default(now())
+}

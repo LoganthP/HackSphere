@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.db
+*.db-journal
+server/uploads/*
+!server/uploads/.gitkeep
+server/src/generated/
+.env
+test-results/
+playwright-report/
