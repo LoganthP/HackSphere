@@ -541,30 +541,4 @@ flowchart LR
 | Want a clean slate | `cd server && npm run db:reset` |
 
 <img src="assets/divider.svg" width="100%" alt=""/>
-
-## 🤝 Contributing
-
-Contributions, issues and feature ideas are welcome.
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/your-feature`
-3. Run the checks: `npm test` in both `server/` and `client/`, plus `npm run typecheck` in `server/`
-4. Commit your changes and open a pull request
-
-## 👨‍💻 Author
-
-<div align="center">
-
-**Loganth P**
-B.E. Computer Science & Engineering, Vidyavardhaka College of Engineering, Mysuru
-
-[![GitHub](https://img.shields.io/badge/GitHub-LoganthP-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/LoganthP)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Loganth_P-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/loganth-p-158667280/)
-
-<br/>
-
-⭐ If HackSphere helped or inspired you, consider giving it a star.
-
-</div>
-
 <img src="assets/footer.svg" width="100%" alt=""/>
