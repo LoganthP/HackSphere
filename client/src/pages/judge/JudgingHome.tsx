@@ -52,9 +52,9 @@ export default function JudgingHome() {
                   {list.map((a) => {
                     const status = a.conflict ? "conflict" : a.evaluation?.status === "SUBMITTED" ? "done" : a.evaluation ? "draft" : "todo";
                     const meta = {
-                      conflict: { icon: ShieldAlert, label: "Conflict declared", cls: "bg-coral-soft text-coral-deep" },
-                      done: { icon: CheckCircle2, label: `Submitted, ${a.evaluation?.score.toFixed(2)}`, cls: "bg-mint-soft text-mint-deep" },
-                      draft: { icon: PenLine, label: "Draft saved", cls: "bg-sun-soft text-sun-deep" },
+                      conflict: { icon: ShieldAlert, label: "Conflict declared", cls: "bg-coral-tint text-coral-ink" },
+                      done: { icon: CheckCircle2, label: `Submitted, ${a.evaluation?.score.toFixed(2)}`, cls: "bg-mint-tint text-mint-ink" },
+                      draft: { icon: PenLine, label: "Draft saved", cls: "bg-sun-tint text-sun-ink" },
                       todo: { icon: CircleDashed, label: "Not started", cls: "bg-surface-2 text-ink-soft" },
                     }[status];
                     const Icon = meta.icon;

@@ -15,7 +15,7 @@ export function AuthShell({ title, subtitle, children, aside }: { title: string;
 
 function ClayPanel() {
   return (
-    <div className="clay relative h-full min-h-96 overflow-hidden rounded-[var(--radius-tile)] p-8 text-navy" style={{ ["--clay" as string]: "#ECE8FF" }}>
+    <div className="clay relative h-full min-h-96 overflow-hidden rounded-[var(--radius-tile)] p-8 text-ink" style={{ ["--clay" as string]: "var(--auth-clay)" }}>
       <p className="relative z-10 max-w-xs font-display text-3xl font-bold leading-tight">Teams, challenges, judging and results, all in one place.</p>
       <span className="clay absolute bottom-10 right-10 size-32 rounded-full" style={{ ["--clay" as string]: "#7058F5" }} aria-hidden />
       <span className="clay absolute bottom-32 right-40 size-16 rounded-2xl rotate-12" style={{ ["--clay" as string]: "#FFC857" }} aria-hidden />

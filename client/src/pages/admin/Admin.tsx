@@ -85,7 +85,7 @@ function OverviewPanel({ o }: { o: Overview }) {
               <XAxis dataKey="day" tick={{ fontSize: 12, fill: "var(--ink-soft)" }} tickLine={false} />
               <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "var(--ink-soft)" }} tickLine={false} axisLine={false} />
               <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "var(--surface-2)" }} />
-              <Bar dataKey="count" name="New accounts" fill="#4285FF" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="count" name="New accounts" fill="var(--chart-blue)" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -99,7 +99,7 @@ function OverviewPanel({ o }: { o: Overview }) {
               <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: "var(--ink-soft)" }} />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 12, fill: "var(--ink-soft)" }} width={110} />
               <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "var(--surface-2)" }} />
-              <Bar dataKey="count" name="Hackathons" fill="#7058F5" radius={[0, 6, 6, 0]} />
+              <Bar dataKey="count" name="Hackathons" fill="var(--chart-violet)" radius={[0, 6, 6, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -194,8 +194,8 @@ function Users() {
                     </td>
                     <td className="px-5 py-3">
                       <div className="flex flex-wrap gap-1.5">
-                        <Badge className={u.status === "ACTIVE" ? "bg-mint-soft text-mint-deep" : "bg-coral-soft text-coral-deep"}>{u.status === "ACTIVE" ? "Active" : "Suspended"}</Badge>
-                        {u.role === "ORGANIZER" && <Badge className={u.organizerVerified ? "bg-violet-soft text-violet-deep" : "bg-sun-soft text-sun-deep"}>{u.organizerVerified ? "Verified" : "Unverified"}</Badge>}
+                        <Badge className={u.status === "ACTIVE" ? "bg-mint-tint text-mint-ink" : "bg-coral-tint text-coral-ink"}>{u.status === "ACTIVE" ? "Active" : "Suspended"}</Badge>
+                        {u.role === "ORGANIZER" && <Badge className={u.organizerVerified ? "bg-violet-tint text-violet-ink" : "bg-sun-tint text-sun-ink"}>{u.organizerVerified ? "Verified" : "Unverified"}</Badge>}
                       </div>
                     </td>
                     <td className="px-5 py-3 text-ink-soft">{fmtDate(u.createdAt)}</td>
@@ -242,7 +242,7 @@ function Events() {
             </p>
           </div>
           <StageBadge stage={e.stage} />
-          <Link to={`/app/organize/${e.id}`} className="text-sm font-semibold text-violet-deep hover:underline dark:text-[#b7a9ff]">
+          <Link to={`/app/organize/${e.id}`} className="text-sm font-semibold text-violet-ink hover:underline">
             Moderate
           </Link>
         </li>

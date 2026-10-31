@@ -32,8 +32,8 @@ export default function ResetPassword() {
     <AuthShell title="Choose a new password">
       {done ? (
         <div className="space-y-4">
-          <p className="rounded-2xl bg-mint-soft p-4 font-medium text-mint-deep">Password updated. You've been signed out everywhere else.</p>
-          <Link to="/login" className="font-semibold text-violet-deep underline-offset-4 hover:underline">
+          <p className="rounded-2xl bg-mint-tint p-4 font-medium text-mint-ink">Password updated. You've been signed out everywhere else.</p>
+          <Link to="/login" className="font-semibold text-violet-ink underline-offset-4 hover:underline">
             Sign in with your new password
           </Link>
         </div>

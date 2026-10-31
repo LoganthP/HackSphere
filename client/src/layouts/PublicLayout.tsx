@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router";
 import { Logo } from "@/components/Logo";
+import { ThemeMenu } from "@/components/ThemeControl";
 import { ButtonLink } from "@/components/ui";
 import { useAuth } from "@/auth/AuthContext";
 import { cn } from "@/lib/cn";
@@ -12,7 +13,7 @@ export function PublicLayout() {
         Skip to content
       </a>
       <header className="sticky top-0 z-40 px-3 pt-3 sm:px-6">
-        <nav className="glass mx-auto flex max-w-6xl items-center gap-3 rounded-2xl px-3 py-2 sm:px-4" aria-label="Main">
+        <nav className="glass mx-auto flex max-w-6xl items-center gap-2 rounded-2xl px-3 py-2 sm:gap-3 sm:px-4" aria-label="Main">
           <Logo />
           <div className="ml-4 hidden items-center gap-1 sm:flex">
             {[
@@ -25,9 +26,10 @@ export function PublicLayout() {
             ))}
           </div>
           <div className="ml-auto flex items-center gap-2">
+            <ThemeMenu />
             {user ? (
               <ButtonLink to="/app" size="sm">
-                Open dashboard
+                <span className="sm:hidden">Dashboard</span><span className="hidden sm:inline">Open dashboard</span>
               </ButtonLink>
             ) : (
               <>

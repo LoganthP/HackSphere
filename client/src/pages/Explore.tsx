@@ -108,7 +108,7 @@ export default function Explore() {
           title="No hackathons match these filters"
           body="Try a broader search or clear a filter."
           action={
-            <button className="font-semibold text-violet-deep underline-offset-4 hover:underline" onClick={() => setParams({})}>
+            <button className="font-semibold text-violet-ink underline-offset-4 hover:underline" onClick={() => setParams({})}>
               Clear all filters
             </button>
           }

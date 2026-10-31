@@ -42,7 +42,7 @@ export default function Notifications() {
                 <span className="sr-only">{n.read ? "Read" : "Unread"}</span>
               </>
             );
-            const cls = cn("flex gap-3 px-5 py-4 transition-colors hover:bg-surface-2", !n.read && "bg-violet-soft/40 dark:bg-violet/10");
+            const cls = cn("flex gap-3 px-5 py-4 transition-colors hover:bg-surface-2", !n.read && "bg-violet-tint/40 dark:bg-violet/10");
             return (
               <li key={n.id}>
                 {n.link ? (

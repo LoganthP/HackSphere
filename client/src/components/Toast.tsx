@@ -15,9 +15,9 @@ const ToastCtx = createContext<(t: Omit<Toast, "id">) => void>(() => {});
 
 const ICON = { success: CheckCircle2, error: TriangleAlert, info: Info };
 const TONE = {
-  success: "bg-mint-soft text-mint-deep",
-  error: "bg-coral-soft text-coral-deep",
-  info: "bg-violet-soft text-violet-deep",
+  success: "bg-mint-tint text-mint-ink",
+  error: "bg-coral-tint text-coral-ink",
+  info: "bg-violet-tint text-violet-ink",
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {

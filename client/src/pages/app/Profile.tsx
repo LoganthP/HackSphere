@@ -3,9 +3,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
 import { cn } from "@/lib/cn";
-import { getTheme, setTheme } from "@/lib/theme";
+import { ThemeControl } from "@/components/ThemeControl";
 import { useAuth } from "@/auth/AuthContext";
-import { Avatar, Badge, Button, Field, FormError, Input, PageHeader, Textarea, Tile, TileHeader, Toggle } from "@/components/ui";
+import { Avatar, Badge, Button, Field, FormError, Input, PageHeader, Textarea, Tile, TileHeader } from "@/components/ui";
 import { useToast } from "@/components/Toast";
 
 const COLORS = ["#7058F5", "#4285FF", "#FF7890", "#FFC857", "#3DCFAE"];
@@ -17,7 +17,6 @@ export default function Profile() {
   const toast = useToast();
   const [form, setForm] = useState({ name: user!.name, college: user!.college ?? "", skills: user!.skills ?? "", bio: user!.bio ?? "", avatarColor: user!.avatarColor });
   const [pw, setPw] = useState({ current: "", next: "" });
-  const [dark, setDark] = useState(getTheme() === "dark");
 
   const save = useMutation({
     mutationFn: () => api("/auth/profile", { method: "PATCH", body: form }),
@@ -97,28 +96,15 @@ export default function Profile() {
             <TileHeader title="Account" />
             <p className="text-sm text-ink-soft">{user!.email}</p>
             <div className="mt-3 flex flex-wrap gap-1.5">
-              <Badge className="bg-violet-soft text-violet-deep">{ROLE_LABEL[user!.role]}</Badge>
-              {user!.role === "ORGANIZER" && (user!.organizerVerified ? <Badge className="bg-mint-soft text-mint-deep">Verified organizer</Badge> : <Badge className="bg-sun-soft text-sun-deep">Verification pending</Badge>)}
-              {context?.isJudge && <Badge className="bg-coral-soft text-coral-deep">Judge</Badge>}
-              {context?.isTeamLeader && <Badge className="bg-sun-soft text-sun-deep">Team leader</Badge>}
+              <Badge className="bg-violet-tint text-violet-ink">{ROLE_LABEL[user!.role]}</Badge>
+              {user!.role === "ORGANIZER" && (user!.organizerVerified ? <Badge className="bg-mint-tint text-mint-ink">Verified organizer</Badge> : <Badge className="bg-sun-tint text-sun-ink">Verification pending</Badge>)}
+              {context?.isJudge && <Badge className="bg-coral-tint text-coral-ink">Judge</Badge>}
+              {context?.isTeamLeader && <Badge className="bg-sun-tint text-sun-ink">Team leader</Badge>}
             </div>
           </Tile>
           <Tile>
             <TileHeader title="Appearance" />
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="font-semibold">Dark mode</p>
-                <p className="text-sm text-ink-soft">HackSphere is designed light-first.</p>
-              </div>
-              <Toggle
-                checked={dark}
-                onChange={(v) => {
-                  setDark(v);
-                  setTheme(v ? "dark" : "light");
-                }}
-                label="Dark mode"
-              />
-            </div>
+            <ThemeControl />
           </Tile>
           <Tile>
             <TileHeader title="Change password" />

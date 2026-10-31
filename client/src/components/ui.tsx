@@ -27,10 +27,10 @@ export const buttonStyles = cva(
         primary:
           "bg-violet-deep text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_10px_22px_-12px_rgb(90_65_230/0.9)] hover:bg-violet active:shadow-[inset_0_3px_8px_rgb(0_0_0/0.25)]",
         secondary: "neu border border-line text-ink hover:bg-surface-2 active:neu-pressed",
-        soft: "bg-violet-soft text-violet-deep hover:bg-[#dfd8ff] dark:bg-violet/20 dark:text-[#c9bfff]",
+        soft: "bg-violet-tint text-violet-ink hover:bg-violet-hover",
         ghost: "text-ink-soft hover:bg-surface-2 hover:text-ink",
-        danger: "bg-coral-soft text-coral-deep hover:bg-[#ffd3dc]",
-        sun: "bg-sun text-navy shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] hover:bg-[#ffbf3d]",
+        danger: "bg-coral-tint text-coral-ink hover:bg-coral-hover",
+        sun: "bg-sun text-navy shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] hover:bg-sun-hover",
       },
       size: {
         sm: "h-9 rounded-xl px-3.5 text-sm",
@@ -91,7 +91,7 @@ export function PageHeader({ title, description, actions }: { title: ReactNode; 
 /* ---------- Form controls ---------- */
 
 const control =
-  "w-full rounded-[var(--radius-control)] border border-line bg-surface px-3.5 text-ink placeholder:text-ink-soft/70 transition-colors focus-visible:border-violet focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet/15 aria-[invalid=true]:border-coral-deep aria-[invalid=true]:ring-coral/20 disabled:opacity-60";
+  "w-full rounded-[var(--radius-control)] border border-line bg-surface px-3.5 text-ink placeholder:text-ink-soft/70 dark:placeholder:text-ink-soft transition-colors focus-visible:border-violet dark:focus-visible:border-violet-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet/15 dark:focus-visible:ring-violet-ink/35 aria-[invalid=true]:border-coral-deep dark:aria-[invalid=true]:border-coral-ink aria-[invalid=true]:ring-coral/20 disabled:opacity-60";
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(({ className, ...props }, ref) => (
   <input ref={ref} className={cn(control, "h-11", className)} {...props} />
@@ -123,7 +123,7 @@ export function Field({ label, hint, error, children, className, optional }: { l
       </label>
       {control}
       {error ? (
-        <p id={`${id}-err`} className="text-sm font-medium text-coral-deep">
+        <p id={`${id}-err`} className="text-sm font-medium text-coral-ink">
           {error}
         </p>
       ) : hint ? (
@@ -138,7 +138,7 @@ export function Field({ label, hint, error, children, className, optional }: { l
 export function FormError({ message }: { message?: string | null }) {
   if (!message) return null;
   return (
-    <p role="alert" className="rounded-xl bg-coral-soft px-4 py-3 text-sm font-medium text-coral-deep">
+    <p role="alert" className="rounded-xl bg-coral-tint px-4 py-3 text-sm font-medium text-coral-ink">
       {message}
     </p>
   );
@@ -153,16 +153,16 @@ export function Badge({ className, children }: { className?: string; children: R
 export function StageBadge({ stage, className }: { stage: EventStage; className?: string }) {
   return (
     <Badge className={cn(STAGE_STYLE[stage], className)}>
-      {stage === "IN_PROGRESS" && <span className="size-1.5 rounded-full bg-blue-deep motion-safe:animate-pulse" aria-hidden />}
+      {stage === "IN_PROGRESS" && <span className="size-1.5 rounded-full bg-blue-deep dark:bg-blue-ink motion-safe:animate-pulse" aria-hidden />}
       {STAGE_LABEL[stage]}
     </Badge>
   );
 }
 
 const REG_STYLE = {
-  PENDING: "bg-sun-soft text-sun-deep",
-  APPROVED: "bg-mint-soft text-mint-deep",
-  REJECTED: "bg-coral-soft text-coral-deep",
+  PENDING: "bg-sun-tint text-sun-ink",
+  APPROVED: "bg-mint-tint text-mint-ink",
+  REJECTED: "bg-coral-tint text-coral-ink",
 } as const;
 const REG_LABEL = { PENDING: "Awaiting review", APPROVED: "Registered", REJECTED: "Declined" } as const;
 
@@ -221,7 +221,7 @@ export function EmptyState({ icon, title, body, action, className }: { icon?: Re
 export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
   const msg = error instanceof Error ? error.message : "Something went wrong.";
   return (
-    <div role="alert" className="mx-auto my-10 max-w-md rounded-[var(--radius-panel)] bg-coral-soft p-6 text-center text-coral-deep">
+    <div role="alert" className="mx-auto my-10 max-w-md rounded-[var(--radius-panel)] bg-coral-tint p-6 text-center text-coral-ink">
       <p className="font-semibold">{msg}</p>
       {onRetry && (
         <Button variant="secondary" size="sm" className="mt-4" onClick={onRetry}>
@@ -234,7 +234,7 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
 
 export function Progress({ value, max = 100, className, tone = "violet", label }: { value: number; max?: number; className?: string; tone?: "violet" | "mint" | "coral" | "blue" | "sun"; label: string }) {
   const pct = max ? Math.min(100, Math.round((value / max) * 100)) : 0;
-  const bar = { violet: "bg-violet", mint: "bg-mint", coral: "bg-coral", blue: "bg-blue", sun: "bg-sun" }[tone];
+  const bar = { violet: "bg-violet dark:bg-violet-ink", mint: "bg-mint", coral: "bg-coral", blue: "bg-blue", sun: "bg-sun" }[tone];
   return (
     <div className={cn("neu-pressed h-2.5 w-full overflow-hidden rounded-full bg-surface-2", className)} role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} aria-label={label}>
       <div className={cn("h-full rounded-full transition-[width] duration-700 ease-out", bar)} style={{ width: `${pct}%` }} />

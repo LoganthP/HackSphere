@@ -26,7 +26,7 @@ export default function OrganizerHome() {
         }
       />
       {user?.role === "ORGANIZER" && !user.organizerVerified && (
-        <p className="mb-6 rounded-2xl bg-sun-soft p-4 font-medium text-sun-deep">An administrator is reviewing your organizer account. You can create hackathons once it's verified.</p>
+        <p className="mb-6 rounded-2xl bg-sun-tint p-4 font-medium text-sun-ink">An administrator is reviewing your organizer account. You can create hackathons once it's verified.</p>
       )}
       {q.isLoading ? (
         <Spinner />

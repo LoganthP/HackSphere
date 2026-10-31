@@ -43,7 +43,7 @@ export default function Login() {
       subtitle={
         <>
           New here?{" "}
-          <Link to="/register" className="font-semibold text-violet-deep underline-offset-4 hover:underline dark:text-[#b7a9ff]">
+          <Link to="/register" className="font-semibold text-violet-ink underline-offset-4 hover:underline">
             Create an account
           </Link>
         </>

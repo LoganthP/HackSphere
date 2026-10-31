@@ -24,11 +24,11 @@ export function EventCard({ event, className }: { event: EventSummary; className
     <article className={cn("tile hover-lift group relative flex flex-col overflow-hidden", className)}>
       <div className="clay relative h-24 rounded-b-none rounded-t-[var(--radius-tile)]" style={{ ["--clay" as string]: event.accentColor }}>
         <div className="absolute inset-x-5 top-4 flex items-start justify-between">
-          <StageBadge stage={event.stage} className="bg-white/85 dark:bg-white/85" />
+          <StageBadge stage={event.stage} className="bg-white/85 dark:bg-surface" />
           {user && (
             <button
               onClick={() => toggle.mutate()}
-              className="relative z-10 grid size-9 place-items-center rounded-xl bg-white/80 text-navy transition hover:bg-white"
+              className="relative z-10 grid size-9 place-items-center rounded-xl bg-white/80 text-navy transition hover:bg-white dark:bg-surface dark:text-ink dark:hover:bg-surface-2"
               aria-pressed={event.bookmarked}
               aria-label={event.bookmarked ? `Remove ${event.title} from saved` : `Save ${event.title}`}
             >

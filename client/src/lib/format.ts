@@ -46,11 +46,11 @@ export const STAGE_LABEL: Record<EventStage, string> = {
 /** One stage → one colour, used consistently across the whole app. */
 export const STAGE_STYLE: Record<EventStage, string> = {
   DRAFT: "bg-surface-2 text-ink-soft",
-  PUBLISHED: "bg-sun-soft text-sun-deep",
-  REGISTRATION_OPEN: "bg-mint-soft text-mint-deep",
-  IN_PROGRESS: "bg-blue-soft text-blue-deep",
-  JUDGING: "bg-coral-soft text-coral-deep",
-  COMPLETED: "bg-violet-soft text-violet-deep",
+  PUBLISHED: "bg-sun-tint text-sun-ink",
+  REGISTRATION_OPEN: "bg-mint-tint text-mint-ink",
+  IN_PROGRESS: "bg-blue-tint text-blue-ink",
+  JUDGING: "bg-coral-tint text-coral-ink",
+  COMPLETED: "bg-violet-tint text-violet-ink",
 };
 
 export const STAGES: EventStage[] = ["DRAFT", "PUBLISHED", "REGISTRATION_OPEN", "IN_PROGRESS", "JUDGING", "COMPLETED"];
@@ -67,7 +67,7 @@ export const initials = (name: string) =>
 
 export const pluralize = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 
-/** Pick navy or white text for a coloured surface, whichever has higher WCAG contrast. */
+/** Pick navy or white for a coloured surface, deepening navy when neither reaches AA. */
 export function readableOn(hex: string) {
   const c = hex.replace("#", "");
   const ch = [0, 2, 4].map((i) => {
@@ -78,5 +78,6 @@ export function readableOn(hex: string) {
   const navyL = 0.0204;
   const vsWhite = 1.05 / (L + 0.05);
   const vsNavy = (L + 0.05) / (navyL + 0.05);
+  if (vsWhite < 4.5 && vsNavy < 4.5) return "#161a33";
   return vsWhite > vsNavy ? "#FFFFFF" : "#202747";
 }

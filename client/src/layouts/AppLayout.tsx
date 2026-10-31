@@ -3,13 +3,13 @@ import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from "react
 import { useQuery } from "@tanstack/react-query";
 import * as DM from "@radix-ui/react-dropdown-menu";
 import { AnimatePresence, motion } from "motion/react";
-import { Bell, CalendarCog, Compass, Gavel, LayoutGrid, LogOut, Mail, Menu, Moon, ShieldCheck, Sun, UserRound, Users, X } from "lucide-react";
+import { Bell, CalendarCog, Compass, Gavel, LayoutGrid, LogOut, Mail, Menu, ShieldCheck, UserRound, Users, X } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext";
 import { Logo } from "@/components/Logo";
 import { Avatar, Spinner } from "@/components/ui";
 import { api } from "@/lib/api";
 import { cn } from "@/lib/cn";
-import { getTheme, setTheme, type Theme } from "@/lib/theme";
+import { ThemeMenuItems } from "@/components/ThemeControl";
 import { useRealtime } from "@/lib/useRealtime";
 
 interface NavItem {
@@ -54,7 +54,7 @@ function NavList({ groups, onNavigate, layoutKey }: { groups: NavItem[][]; onNav
                 <li key={item.to}>
                   <NavLink to={item.to} end={item.end} onClick={onNavigate} className={cn("relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.95rem] font-semibold transition-colors", active ? "text-ink" : "text-ink-soft hover:text-ink")}>
                     {active && <motion.span layoutId={`nav-${layoutKey}`} className="neu absolute inset-0 rounded-xl" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
-                    <Icon className={cn("relative size-5", active && "text-violet-deep dark:text-[#b7a9ff]")} />
+                    <Icon className={cn("relative size-5", active && "text-violet-ink")} />
                     <span className="relative">{item.label}</span>
                     {!!item.badge && <span className="relative ml-auto rounded-full bg-coral px-2 text-xs font-bold leading-5 text-navy">{item.badge}</span>}
                   </NavLink>
@@ -70,7 +70,6 @@ function NavList({ groups, onNavigate, layoutKey }: { groups: NavItem[][]; onNav
 function UserMenu() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [theme, setT] = useState<Theme>(getTheme());
   if (!user) return null;
   const itemCls = "flex cursor-pointer items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium outline-none data-[highlighted]:bg-surface-2";
   return (
@@ -87,21 +86,11 @@ function UserMenu() {
           <DM.Item className={itemCls} onSelect={() => navigate("/app/profile")}>
             <UserRound className="size-4" /> Profile and settings
           </DM.Item>
-          <DM.Item
-            className={itemCls}
-            onSelect={(e) => {
-              e.preventDefault();
-              const next = theme === "light" ? "dark" : "light";
-              setTheme(next);
-              setT(next);
-            }}
-          >
-            {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
-            {theme === "light" ? "Use dark mode" : "Use light mode"}
-          </DM.Item>
+          <DM.Separator className="my-1 h-px bg-line" />
+          <ThemeMenuItems />
           <DM.Separator className="my-1 h-px bg-line" />
           <DM.Item
-            className={cn(itemCls, "text-coral-deep")}
+            className={cn(itemCls, "text-coral-ink")}
             onSelect={async () => {
               await logout();
               navigate("/");
@@ -158,7 +147,7 @@ export function AppLayout() {
       <AnimatePresence>
         {open && (
           <>
-            <motion.div className="fixed inset-0 z-50 bg-navy/30 backdrop-blur-sm lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
+            <motion.div className="fixed inset-0 z-50 bg-navy/30 backdrop-blur-sm dark:bg-black/60 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
             <motion.aside
               className="fixed inset-y-0 left-0 z-50 flex w-[82%] max-w-xs flex-col bg-surface p-4 lg:hidden"
               initial={{ x: "-100%" }}
@@ -199,7 +188,7 @@ export function RequireRole({ roles, children }: { roles: ("ORGANIZER" | "ADMIN"
       <div className="mx-auto mt-16 max-w-md text-center">
         <h1 className="text-2xl font-bold">This area isn't part of your account</h1>
         <p className="mt-2 text-ink-soft">Ask a platform administrator if you need access.</p>
-        <Link to="/app" className="mt-6 inline-block font-semibold text-violet-deep underline-offset-4 hover:underline">
+        <Link to="/app" className="mt-6 inline-block font-semibold text-violet-ink underline-offset-4 hover:underline">
           Back to your dashboard
         </Link>
       </div>

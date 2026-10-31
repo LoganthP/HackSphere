@@ -331,12 +331,14 @@ hacksphere/
 
 | Tool | Version |
 | :-- | :-- |
-| Node.js | **20.19 or newer** (22 LTS recommended) |
+| Node.js | **24.15+ in the 24.x LTS line recommended**, or 22.22.2+ in the 22.x line, or 26+ |
 | npm | 10+ |
 | OS | Windows, macOS or Linux |
 
 > [!TIP]
 > No database server is needed. SQLite is a single file (`server/dev.db`) that is created for you.
+
+Node 23 is unsupported by Prisma, and Node 20 is unsupported by the test runner. Check `node --version` before installing. If you use nvm, run `nvm install 24` and `nvm use 24` (the project includes `.nvmrc`). After changing Node versions, reinstall dependencies before running setup.
 
 ### 2. Clone
 
@@ -533,7 +535,8 @@ flowchart LR
 | Problem | Fix |
 | :-- | :-- |
 | "Can't reach the HackSphere server" | Start the API (`cd server && npm run dev`) before using the app |
-| `npm install` fails building `better-sqlite3` or `argon2` | Use Node 20.19+ or 22 LTS, which have prebuilt binaries. On Windows, re-run the install from a fresh terminal |
+| Prisma reports an unsupported Node version, or `prisma` / `tsx` is not recognized after an install failure | Switch to Node 24 LTS (24.15+), open a fresh terminal, confirm `node --version`, then run `npm ci` and `npm run setup` in `server/` |
+| `npm install` fails building `better-sqlite3` or `argon2` | Use Node 24 LTS. On Windows, re-run the install from a fresh terminal |
 | `Cannot find module '../generated/prisma/client'` | Run `npm run db:generate` in `server/` |
 | Port 4000 or 5173 in use | Change `PORT` in `server/.env`; for the client run `npx vite --port 5174` and set `CLIENT_ORIGIN` to match |
 | Password reset email never arrives | There is no mail server in the prototype. The reset link is printed in the API terminal and shown on screen in development |

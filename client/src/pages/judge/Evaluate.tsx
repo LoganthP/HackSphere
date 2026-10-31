@@ -92,7 +92,7 @@ export default function Evaluate() {
       <p className="mt-1 text-ink-soft">by {d.team?.name}</p>
 
       {d.assignment.conflict && (
-        <p className="mt-4 flex items-center gap-2 rounded-2xl bg-coral-soft p-4 font-medium text-coral-deep" role="status">
+        <p className="mt-4 flex items-center gap-2 rounded-2xl bg-coral-tint p-4 font-medium text-coral-ink" role="status">
           <ShieldAlert className="size-5" aria-hidden /> You declared a conflict of interest: {d.assignment.conflictNote}
         </p>
       )}
@@ -108,7 +108,7 @@ export default function Evaluate() {
             <>
               <Tile>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge className="bg-mint-soft text-mint-deep">Final v{s.version}</Badge>
+                  <Badge className="bg-mint-tint text-mint-ink">Final v{s.version}</Badge>
                   <span className="text-sm text-ink-soft">Submitted {fmtDateTime(s.submittedAt)}</span>
                 </div>
                 <h2 className="mt-4 text-lg font-bold">Summary</h2>
@@ -155,7 +155,7 @@ export default function Evaluate() {
                   ))}
                 </ul>
                 {!d.assignment.conflict && (
-                  <button className="mt-4 text-sm font-semibold text-coral-deep hover:underline" onClick={() => setConflictOpen(true)}>
+                  <button className="mt-4 text-sm font-semibold text-coral-ink hover:underline" onClick={() => setConflictOpen(true)}>
                     I know this team personally (declare a conflict)
                   </button>
                 )}
@@ -179,7 +179,7 @@ export default function Evaluate() {
             <p className="mt-3 rounded-xl bg-surface-2 p-3 text-sm">{d.event.resultsPublished ? "Results are published, so scores are final." : "Scoring opens when organizers start judging."}</p>
           )}
           <FormError message={err && !err.fields ? err.message : null} />
-          {err?.fields?.scores && <p className="mt-3 text-sm font-medium text-coral-deep">{err.fields.scores}</p>}
+          {err?.fields?.scores && <p className="mt-3 text-sm font-medium text-coral-ink">{err.fields.scores}</p>}
           <ul className="mt-4 space-y-5">
             {criteria.map((c) => {
               const v = scores[c.id];
@@ -205,7 +205,7 @@ export default function Evaluate() {
                       onPointerUp={(e) => v === undefined && setScores((sc) => ({ ...sc, [c.id]: Number(e.currentTarget.value) }))}
                       onClick={(e) => v === undefined && setScores((sc) => ({ ...sc, [c.id]: Number(e.currentTarget.value) }))}
                       onKeyUp={(e) => v === undefined && setScores((sc) => ({ ...sc, [c.id]: Number(e.currentTarget.value) }))}
-                      className={cn("h-2 flex-1 cursor-pointer accent-violet-deep disabled:cursor-not-allowed", v === undefined && "opacity-40")}
+                      className={cn("h-2 flex-1 cursor-pointer accent-violet-ink disabled:cursor-not-allowed", v === undefined && "opacity-40")}
                       aria-valuetext={v === undefined ? "Not scored" : `${v} out of 10`}
                     />
                     <span className={cn("w-10 text-right font-display text-lg font-bold tabular-nums", v === undefined && "text-ink-soft")}>{v ?? "–"}</span>

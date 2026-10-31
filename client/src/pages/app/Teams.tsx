@@ -56,8 +56,8 @@ export default function Teams() {
                           <div className="mt-3 flex flex-wrap gap-1.5">
                             <StageBadge stage={t.event.stage} />
                             <RegistrationBadge status={t.registration?.status} />
-                            {t.isLeader && <Badge className="bg-sun-soft text-sun-deep">Leader</Badge>}
-                            {final && <Badge className="bg-mint-soft text-mint-deep">Submitted v{t.project!.submissions[0].version}</Badge>}
+                            {t.isLeader && <Badge className="bg-sun-tint text-sun-ink">Leader</Badge>}
+                            {final && <Badge className="bg-mint-tint text-mint-ink">Submitted v{t.project!.submissions[0].version}</Badge>}
                           </div>
                           <p className="mt-3 text-sm">{t.problem ? <><span className="font-semibold">{t.problem.code}</span> {t.problem.title}</> : <span className="text-ink-soft">No challenge selected</span>}</p>
                           {ms.length > 0 && <Progress className="mt-4" value={ms.filter((m) => m.done).length} max={ms.length} tone="mint" label="Milestones" />}

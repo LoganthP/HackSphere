@@ -12,7 +12,7 @@ const PODIUM = [
   { clay: "#9C8CFF", label: "Runner-up", h: "sm:h-52" },
   { clay: "#3DCFAE", label: "Third place", h: "sm:h-44" },
 ];
-const BAR_COLORS = ["#7058F5", "#FF7890", "#3DCFAE"];
+const BAR_COLORS = ["var(--chart-violet)", "var(--chart-coral)", "var(--chart-mint)"];
 
 export default function Results() {
   const { slug = "" } = useParams();
@@ -38,7 +38,7 @@ export default function Results() {
   return (
     <div className="mx-auto max-w-6xl px-5 pt-10 sm:px-6">
       {r.preview && (
-        <p className="mb-6 rounded-2xl bg-sun-soft px-4 py-3 font-semibold text-sun-deep" role="status">
+        <p className="mb-6 rounded-2xl bg-sun-tint px-4 py-3 font-semibold text-sun-ink" role="status">
           Organizer preview. Participants can't see these results until you publish them.
         </p>
       )}
@@ -71,7 +71,7 @@ export default function Results() {
                   <Medal className="size-7" aria-hidden />
                   <p className="mt-2 text-sm font-bold">{p.label}</p>
                   <p className="font-display text-2xl font-extrabold leading-tight">{row.team.name}</p>
-                  <p className="text-sm font-medium text-navy/75">{row.project.title}</p>
+                  <p className="text-sm font-medium text-navy">{row.project.title}</p>
                   <p className="mt-3 font-display text-4xl font-extrabold tabular-nums">{row.average?.toFixed(2)}</p>
                 </motion.div>
               );
@@ -117,7 +117,7 @@ export default function Results() {
                       <td className="px-5 py-4 text-sm">{row.problem ? <Badge className="bg-surface-2 text-ink-soft">{row.problem.code}</Badge> : "—"}</td>
                       <td className="px-5 py-4 text-sm text-ink-soft">
                         {row.evaluations}/{row.assignedJudges || row.evaluations}
-                        {row.missingEvaluations > 0 && <span className="ml-1 text-coral-deep">({row.missingEvaluations} pending)</span>}
+                        {row.missingEvaluations > 0 && <span className="ml-1 text-coral-ink">({row.missingEvaluations} pending)</span>}
                       </td>
                       <td className="px-5 py-4 text-right font-display text-xl font-bold tabular-nums">{row.average?.toFixed(2) ?? "Not scored"}</td>
                     </motion.tr>

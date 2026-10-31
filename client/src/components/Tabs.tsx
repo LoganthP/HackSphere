@@ -24,7 +24,7 @@ export function Tabs({
             key={t.value}
             value={t.value}
             className={cn(
-              "relative shrink-0 rounded-xl px-4 py-2 text-sm font-semibold text-ink-soft transition-colors hover:text-ink data-[state=active]:text-violet-deep dark:data-[state=active]:text-white",
+              "relative shrink-0 rounded-xl px-4 py-2 text-sm font-semibold text-ink-soft transition-colors hover:text-ink data-[state=active]:text-violet-ink dark:data-[state=active]:text-white",
             )}
           >
             {value === t.value && (

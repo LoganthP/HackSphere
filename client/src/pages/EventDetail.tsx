@@ -12,7 +12,7 @@ import { Avatar, AvatarStack, Badge, Button, ButtonLink, EmptyState, ErrorState,
 import { Dialog } from "@/components/Dialog";
 import { useToast } from "@/components/Toast";
 
-const DIFF = { EASY: "bg-mint-soft text-mint-deep", MEDIUM: "bg-sun-soft text-sun-deep", HARD: "bg-coral-soft text-coral-deep" } as const;
+const DIFF = { EASY: "bg-mint-tint text-mint-ink", MEDIUM: "bg-sun-tint text-sun-ink", HARD: "bg-coral-tint text-coral-ink" } as const;
 
 export default function EventDetail() {
   const { slug = "" } = useParams();
@@ -44,12 +44,12 @@ export default function EventDetail() {
       <header className="clay relative overflow-hidden rounded-[2rem] p-7 sm:p-10" style={{ ["--clay" as string]: event.accentColor, color: readableOn(event.accentColor) }}>
         <div className="relative z-10 max-w-3xl">
           <div className="flex flex-wrap gap-2">
-            <StageBadge stage={event.stage} className="bg-white/90 dark:bg-white/90" />
-            <Badge className="bg-white/70 text-navy">{event.category}</Badge>
-            <Badge className="bg-white/70 text-navy">{MODE_LABEL[event.mode]}</Badge>
+            <StageBadge stage={event.stage} className="bg-white/90 dark:bg-surface" />
+            <Badge className="bg-white/70 text-navy dark:bg-surface dark:text-ink">{event.category}</Badge>
+            <Badge className="bg-white/70 text-navy dark:bg-surface dark:text-ink">{MODE_LABEL[event.mode]}</Badge>
           </div>
           <h1 className="mt-4 text-4xl font-extrabold sm:text-6xl">{event.title}</h1>
-          <p className="mt-3 text-lg font-medium opacity-90">{event.tagline}</p>
+          <p className="mt-3 text-lg font-medium">{event.tagline}</p>
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
             <span className="flex items-center gap-2">
               <CalendarDays className="size-4" aria-hidden /> {fmtRange(event.startsAt, event.endsAt)}
@@ -122,7 +122,7 @@ export default function EventDetail() {
                 <li key={c.id} className="tile p-4">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-semibold">{c.name}</span>
-                    <span className="text-sm font-semibold text-violet-deep dark:text-[#b7a9ff]">{Math.round((c.weight / totalWeight) * 100)}%</span>
+                    <span className="text-sm font-semibold text-violet-ink">{Math.round((c.weight / totalWeight) * 100)}%</span>
                   </div>
                   {c.description && <p className="mt-1 text-sm text-ink-soft">{c.description}</p>}
                 </li>
@@ -156,9 +156,9 @@ export default function EventDetail() {
             ) : (
               <ul className="mt-4 space-y-3">
                 {event.announcements.map((a) => (
-                  <li key={a.id} className={cn("tile p-5", a.pinned && "border-sun bg-sun-soft/60 dark:bg-sun/10")}>
+                  <li key={a.id} className={cn("tile p-5", a.pinned && "border-sun bg-sun-tint/60 dark:bg-sun/10")}>
                     <div className="flex items-center gap-2 text-sm text-ink-soft">
-                      {a.pinned && <Pin className="size-4 text-sun-deep" aria-label="Pinned" />}
+                      {a.pinned && <Pin className="size-4 text-sun-ink" aria-label="Pinned" />}
                       <span>{a.author?.name}</span>
                       <span aria-hidden>,</span>
                       <time dateTime={a.createdAt}>{relative(a.createdAt)}</time>
@@ -243,7 +243,7 @@ function ActionPanel({ event, viewer }: { event: EventDetailT; viewer: Viewer | 
           <p className="font-display text-xl font-bold">{viewer.team.name}</p>
           <div className="mt-2 flex flex-wrap gap-2">
             <RegistrationBadge status={viewer.team.registration} />
-            {viewer.team.isLeader && <Badge className="bg-sun-soft text-sun-deep">You lead this team</Badge>}
+            {viewer.team.isLeader && <Badge className="bg-sun-tint text-sun-ink">You lead this team</Badge>}
           </div>
           <ButtonLink to={`/app/teams/${viewer.team.id}`} className="mt-4 w-full">
             Open team workspace
@@ -271,7 +271,7 @@ function ActionPanel({ event, viewer }: { event: EventDetailT; viewer: Viewer | 
       )}
       {user && !viewer?.isManager && (
         <Button variant="ghost" className="mt-2 w-full" onClick={() => bookmark.mutate()} aria-pressed={viewer?.bookmarked}>
-          <Bookmark className={cn("size-4", viewer?.bookmarked && "fill-current text-sun-deep")} aria-hidden />
+          <Bookmark className={cn("size-4", viewer?.bookmarked && "fill-current text-sun-ink")} aria-hidden />
           {viewer?.bookmarked ? "Saved" : "Save for later"}
         </Button>
       )}

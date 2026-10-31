@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
 import { cn } from "@/lib/cn";
-import { toLocalInput } from "@/lib/format";
+import { readableOn, toLocalInput } from "@/lib/format";
 import type { EventSummary } from "@/lib/types";
 import { Button, ErrorState, Field, FormError, Input, PageHeader, Select, Spinner, Textarea, Tile, TileHeader } from "@/components/ui";
 import { useToast } from "@/components/Toast";
@@ -214,9 +214,9 @@ export default function EventForm() {
                 </button>
               ))}
             </div>
-            <div className="clay mt-5 rounded-2xl p-4 text-navy" style={{ ["--clay" as string]: form.accentColor }}>
+            <div className="clay mt-5 rounded-2xl p-4" style={{ ["--clay" as string]: form.accentColor, color: readableOn(form.accentColor) }}>
               <p className="font-display text-lg font-bold">{form.title || "Your hackathon"}</p>
-              <p className="text-sm text-navy/75">{form.tagline || "Tagline preview"}</p>
+              <p className="text-sm">{form.tagline || "Tagline preview"}</p>
             </div>
           </Tile>
           <Button type="submit" size="lg" className="w-full" loading={save.isPending}>

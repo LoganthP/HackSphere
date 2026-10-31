@@ -106,7 +106,7 @@ export default function Dashboard() {
       {/* Teams */}
       <motion.div variants={item} className="md:col-span-6 lg:col-span-4">
         <Tile className="h-full">
-          <TileHeader title="Your teams" action={<Link to="/app/teams" className="text-sm font-semibold text-violet-deep hover:underline dark:text-[#b7a9ff]">See all</Link>} />
+          <TileHeader title="Your teams" action={<Link to="/app/teams" className="text-sm font-semibold text-violet-ink hover:underline">See all</Link>} />
           {d.teams.length === 0 ? (
             <EmptyState icon={<Users className="size-6" />} title="You're not on a team yet" body="Pick a hackathon, then create a team or ask to join one." action={<ButtonLink to="/hackathons" size="sm">Find a hackathon</ButtonLink>} />
           ) : (
@@ -127,7 +127,7 @@ export default function Dashboard() {
                       <div className="mt-3 flex flex-wrap gap-1.5">
                         <StageBadge stage={t.event.stage} />
                         <RegistrationBadge status={t.registration} />
-                        {t.isLeader && <Badge className="bg-sun-soft text-sun-deep">Leader</Badge>}
+                        {t.isLeader && <Badge className="bg-sun-tint text-sun-ink">Leader</Badge>}
                       </div>
                       {ms.length > 0 && (
                         <div className="mt-4">
@@ -189,7 +189,7 @@ export default function Dashboard() {
               {d.deadlines.map((dl) => (
                 <li key={dl.label + dl.eventTitle}>
                   <Link to={dl.link} className="flex items-center gap-3 rounded-xl p-1 hover:bg-surface-2">
-                    <span className="grid w-14 shrink-0 place-items-center rounded-xl bg-violet-soft py-1.5 text-center font-display text-sm font-bold leading-tight text-violet-deep dark:bg-violet/20 dark:text-[#c9bfff]">
+                    <span className="grid w-14 shrink-0 place-items-center rounded-xl bg-violet-tint py-1.5 text-center font-display text-sm font-bold leading-tight text-violet-ink">
                       {fmtShort(dl.at)}
                     </span>
                     <span className="min-w-0">
@@ -209,7 +209,7 @@ export default function Dashboard() {
       {/* Notifications */}
       <motion.div variants={item} className={cn("md:col-span-3", hasRole ? "lg:col-span-2" : "lg:col-span-3")}>
         <Tile className="h-full">
-          <TileHeader title="Recent updates" action={<Link to="/app/notifications" className="text-sm font-semibold text-violet-deep hover:underline dark:text-[#b7a9ff]">All</Link>} />
+          <TileHeader title="Recent updates" action={<Link to="/app/notifications" className="text-sm font-semibold text-violet-ink hover:underline">All</Link>} />
           {d.notifications.length === 0 ? (
             <p className="text-sm text-ink-soft">Nothing new.</p>
           ) : (
@@ -246,8 +246,8 @@ export default function Dashboard() {
             <p className="mt-3 font-display text-2xl font-bold">
               {d.judging.completed} of {d.judging.assigned} evaluated
             </p>
-            <p className="text-sm font-medium text-navy/75">{d.judging.open ? `${d.judging.open} projects are open for scoring.` : "Scoring opens when organizers start judging."}</p>
-            <ButtonLink to="/app/judging" variant="secondary" size="sm" className="mt-auto self-start border-0 bg-white/85 text-navy shadow-none">
+            <p className="text-sm font-medium text-navy/85">{d.judging.open ? `${d.judging.open} projects are open for scoring.` : "Scoring opens when organizers start judging."}</p>
+            <ButtonLink to="/app/judging" variant="secondary" size="sm" className="mt-auto self-start border-0 bg-white/85 text-navy shadow-none dark:bg-surface dark:text-ink">
               Open judging workspace
             </ButtonLink>
           </div>
@@ -267,7 +267,7 @@ export default function Dashboard() {
                       <span className="block truncate font-semibold">{e.title}</span>
                       <span className="block text-xs text-ink-soft">{e.teams} teams</span>
                     </span>
-                    {e.pendingRegistrations > 0 && <Badge className="bg-sun-soft text-sun-deep">{e.pendingRegistrations} to review</Badge>}
+                    {e.pendingRegistrations > 0 && <Badge className="bg-sun-tint text-sun-ink">{e.pendingRegistrations} to review</Badge>}
                     <StageBadge stage={e.stage} className="hidden sm:inline-flex" />
                   </Link>
                 </li>
@@ -280,7 +280,7 @@ export default function Dashboard() {
       {/* Recommendations */}
       <motion.div variants={item} className="md:col-span-6">
         <Tile className="h-full">
-          <TileHeader title="Recommended for you" action={<Sparkles className="size-5 text-sun-deep" aria-hidden />} />
+          <TileHeader title="Recommended for you" action={<Sparkles className="size-5 text-sun-ink" aria-hidden />} />
           {d.recommendations.length === 0 ? (
             <p className="text-sm text-ink-soft">You've joined every open hackathon. Impressive.</p>
           ) : (

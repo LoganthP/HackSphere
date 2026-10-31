@@ -132,7 +132,7 @@ export default function Landing() {
           <h2 id="upcoming" className="text-3xl font-bold sm:text-4xl">
             Open for builders
           </h2>
-          <Link to="/hackathons" className="shrink-0 font-semibold text-violet-deep underline-offset-4 hover:underline dark:text-[#b7a9ff]">
+          <Link to="/hackathons" className="shrink-0 font-semibold text-violet-ink underline-offset-4 hover:underline">
             See all hackathons
           </Link>
         </div>
@@ -151,7 +151,7 @@ export default function Landing() {
         <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {JOURNEY.map((step, i) => (
             <li key={step.title} className="tile relative overflow-hidden p-6">
-              <span className="font-display text-6xl font-extrabold leading-none" style={{ color: step.color, WebkitTextStroke: "1.5px #7058F5" }} aria-hidden>
+              <span className="font-display text-6xl font-extrabold leading-none" style={{ color: step.color, WebkitTextStroke: "1.5px var(--focus)" }} aria-hidden>
                 {i + 1}
               </span>
               <h3 className="mt-4 text-xl font-bold">{step.title}</h3>
@@ -171,13 +171,13 @@ export default function Landing() {
             {stats.data.featuredProblems.map((p) => (
               <Link key={p.id} to={`/hackathons/${p.event.slug}#challenges`} className="glass hover-lift block rounded-[var(--radius-tile)] p-6">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge className="bg-navy text-white">{p.code}</Badge>
+                  <Badge className="bg-navy text-white dark:bg-white dark:text-navy">{p.code}</Badge>
                   <Badge className="bg-surface-2 text-ink-soft">{p.category}</Badge>
                   <span className="ml-auto text-sm text-ink-soft">{p._count.teams} teams</span>
                 </div>
                 <h3 className="mt-3 text-xl font-bold">{p.title}</h3>
                 <p className="mt-1.5 line-clamp-2 text-ink-soft">{p.description}</p>
-                <p className="mt-3 text-sm font-semibold text-violet-deep dark:text-[#b7a9ff]">{p.event.title}</p>
+                <p className="mt-3 text-sm font-semibold text-violet-ink">{p.event.title}</p>
               </Link>
             ))}
           </div>

@@ -27,16 +27,16 @@ export default function ForgotPassword() {
     <AuthShell title="Reset your password" subtitle="Enter your account email and we'll send a link to choose a new password.">
       {done ? (
         <div className="space-y-4">
-          <p className="rounded-2xl bg-mint-soft p-4 font-medium text-mint-deep">{done.message}</p>
+          <p className="rounded-2xl bg-mint-tint p-4 font-medium text-mint-ink">{done.message}</p>
           {done.devResetLink && (
             <p className="text-sm text-ink-soft">
               Development mode has no mail server, so here's the link:{" "}
-              <a href={done.devResetLink} className="break-all font-semibold text-violet-deep underline">
+              <a href={done.devResetLink} className="break-all font-semibold text-violet-ink underline">
                 open reset page
               </a>
             </p>
           )}
-          <Link to="/login" className="inline-block font-semibold text-violet-deep underline-offset-4 hover:underline">
+          <Link to="/login" className="inline-block font-semibold text-violet-ink underline-offset-4 hover:underline">
             Back to sign in
           </Link>
         </div>

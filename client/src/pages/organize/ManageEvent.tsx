@@ -66,7 +66,7 @@ export default function ManageEvent() {
           <h1 className="mt-1 text-4xl font-extrabold">{e.title}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <StageBadge stage={e.stage} />
-            {e.resultsPublished && <Badge className="bg-sun-soft text-sun-deep">Results published</Badge>}
+            {e.resultsPublished && <Badge className="bg-sun-tint text-sun-ink">Results published</Badge>}
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -184,7 +184,7 @@ function StageControl({ m }: { m: Manage }) {
           </Select>
         </label>
         {m.event.stage === "DRAFT" && (
-          <Button size="sm" variant="ghost" className="ml-auto text-coral-deep" onClick={() => del.mutate()} loading={del.isPending}>
+          <Button size="sm" variant="ghost" className="ml-auto text-coral-ink" onClick={() => del.mutate()} loading={del.isPending}>
             <Trash2 className="size-4" aria-hidden /> Delete draft
           </Button>
         )}
@@ -235,15 +235,15 @@ function Overview({ m }: { m: Manage }) {
               <AreaChart data={timeline} margin={{ left: -24, right: 8 }}>
                 <defs>
                   <linearGradient id="reg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#7058F5" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#7058F5" stopOpacity={0} />
+                    <stop offset="0%" stopColor="var(--chart-violet)" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="var(--chart-violet)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" vertical={false} />
                 <XAxis dataKey="day" tick={{ fontSize: 12, fill: "var(--ink-soft)" }} tickLine={false} />
                 <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "var(--ink-soft)" }} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Area type="monotone" dataKey="count" name="Registrations" stroke="#5A41E6" strokeWidth={2.5} fill="url(#reg)" />
+                <Area type="monotone" dataKey="count" name="Registrations" stroke="var(--chart-line)" strokeWidth={2.5} fill="url(#reg)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -282,8 +282,8 @@ function Overview({ m }: { m: Manage }) {
               <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "var(--ink-soft)" }} tickLine={false} axisLine={false} />
               <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "var(--surface-2)" }} />
               <Legend wrapperStyle={{ fontSize: 13 }} formatter={(v) => <span style={{ color: "var(--ink)" }}>{v}</span>} />
-              <Bar dataKey="selected" name="Teams that chose it" fill="#7058F5" radius={[8, 8, 0, 0]} maxBarSize={56} />
-              <Bar dataKey="submitted" name="Final submissions" fill="#3DCFAE" radius={[8, 8, 0, 0]} maxBarSize={56} />
+              <Bar dataKey="selected" name="Teams that chose it" fill="var(--chart-violet)" radius={[8, 8, 0, 0]} maxBarSize={56} />
+              <Bar dataKey="submitted" name="Final submissions" fill="var(--chart-mint)" radius={[8, 8, 0, 0]} maxBarSize={56} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -402,15 +402,15 @@ function Registrations({ m }: { m: Manage }) {
                       <p className="font-display text-lg font-bold">{t.name}</p>
                       <RegistrationBadge status={t.registration?.status} />
                       {t.problem && <Badge className="bg-surface-2 text-ink-soft">{t.problem.code}</Badge>}
-                      {t.latestSubmission?.isFinal && <Badge className="bg-mint-soft text-mint-deep">Submitted v{t.latestSubmission.version}</Badge>}
-                      {t.deadlineExtension && <Badge className="bg-blue-soft text-blue-deep">Extended to {fmtDateTime(t.deadlineExtension)}</Badge>}
+                      {t.latestSubmission?.isFinal && <Badge className="bg-mint-tint text-mint-ink">Submitted v{t.latestSubmission.version}</Badge>}
+                      {t.deadlineExtension && <Badge className="bg-blue-tint text-blue-ink">Extended to {fmtDateTime(t.deadlineExtension)}</Badge>}
                     </div>
                     <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-ink-soft">
                       <AvatarStack people={t.members} size={26} />
                       <span>{t.members.map((x) => x.name).join(", ")}</span>
                     </div>
                     {!sizeOk && (
-                      <p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-coral-deep">
+                      <p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-coral-ink">
                         <AlertTriangle className="size-4" aria-hidden /> {size} members, outside the {m.event.minTeamSize}–{m.event.maxTeamSize} limit
                       </p>
                     )}
@@ -556,7 +556,7 @@ function Challenges({ m }: { m: Manage }) {
                   <button className="rounded-lg p-1.5 text-ink-soft hover:bg-surface-2" onClick={() => open(p)} aria-label={`Edit ${p.code}`}>
                     <Pencil className="size-4" />
                   </button>
-                  <button className="rounded-lg p-1.5 text-ink-soft hover:bg-coral-soft hover:text-coral-deep" onClick={() => del.mutate(p.id)} aria-label={`Delete ${p.code}`}>
+                  <button className="rounded-lg p-1.5 text-ink-soft hover:bg-coral-tint hover:text-coral-ink" onClick={() => del.mutate(p.id)} aria-label={`Delete ${p.code}`}>
                     <Trash2 className="size-4" />
                   </button>
                 </div>
@@ -686,7 +686,7 @@ function Judging({ m }: { m: Manage }) {
                   />
                 </label>
                 {!m.criteriaLocked && (
-                  <button className="rounded-lg p-1.5 text-ink-soft hover:text-coral-deep" onClick={() => delCrit.mutate(c.id)} aria-label={`Remove ${c.name}`}>
+                  <button className="rounded-lg p-1.5 text-ink-soft hover:text-coral-ink" onClick={() => delCrit.mutate(c.id)} aria-label={`Remove ${c.name}`}>
                     <Trash2 className="size-4" />
                   </button>
                 )}
@@ -749,7 +749,7 @@ function Judging({ m }: { m: Manage }) {
                     {j.completed} of {j.assigned} evaluated
                   </p>
                 </div>
-                <button className="rounded-lg p-1.5 text-ink-soft hover:bg-coral-soft hover:text-coral-deep" onClick={() => removeJudge.mutate(j.id)} aria-label={`Remove ${j.name}`}>
+                <button className="rounded-lg p-1.5 text-ink-soft hover:bg-coral-tint hover:text-coral-ink" onClick={() => removeJudge.mutate(j.id)} aria-label={`Remove ${j.name}`}>
                   <X className="size-4" />
                 </button>
               </li>
@@ -800,10 +800,10 @@ function Judging({ m }: { m: Manage }) {
                         <div className="flex flex-wrap gap-1.5">
                           {t.judges.length === 0 && <span className="text-ink-soft">None</span>}
                           {t.judges.map((j) => (
-                            <span key={j.assignmentId} className={cn("inline-flex items-center gap-1 rounded-full py-1 pl-2.5 pr-1 text-xs font-semibold", j.conflict ? "bg-coral-soft text-coral-deep" : "bg-surface-2")} title={j.conflictNote ?? undefined}>
+                            <span key={j.assignmentId} className={cn("inline-flex items-center gap-1 rounded-full py-1 pl-2.5 pr-1 text-xs font-semibold", j.conflict ? "bg-coral-tint text-coral-ink" : "bg-surface-2")} title={j.conflictNote ?? undefined}>
                               {j.name}
                               {j.conflict && " (conflict)"}
-                              <button className="rounded-full p-0.5 hover:bg-white/60" onClick={() => unassign.mutate(j.assignmentId)} aria-label={`Unassign ${j.name}`}>
+                              <button className="rounded-full p-0.5 hover:bg-white/60 dark:hover:bg-surface-2" onClick={() => unassign.mutate(j.assignmentId)} aria-label={`Unassign ${j.name}`}>
                                 <X className="size-3" />
                               </button>
                             </span>
@@ -887,9 +887,9 @@ function Announcements({ m }: { m: Manage }) {
             {m.announcements.map((a) => (
               <li key={a.id} className={cn("tile p-5", a.pinned && "border-sun")}>
                 <div className="flex items-center gap-2 text-sm text-ink-soft">
-                  {a.pinned && <Pin className="size-4 text-sun-deep" aria-label="Pinned" />}
+                  {a.pinned && <Pin className="size-4 text-sun-ink" aria-label="Pinned" />}
                   {relative(a.createdAt)}
-                  <button className="ml-auto rounded-lg p-1.5 hover:bg-coral-soft hover:text-coral-deep" onClick={() => del.mutate(a.id)} aria-label={`Delete ${a.title}`}>
+                  <button className="ml-auto rounded-lg p-1.5 hover:bg-coral-tint hover:text-coral-ink" onClick={() => del.mutate(a.id)} aria-label={`Delete ${a.title}`}>
                     <Trash2 className="size-4" />
                   </button>
                 </div>
@@ -938,7 +938,7 @@ function ResultsTab({ m }: { m: Manage }) {
         )}
         <div className="mt-5 flex flex-wrap gap-2">
           {m.event.resultsPublished ? (
-            <Button variant="secondary" className="border-0 bg-white/85 text-navy shadow-none" onClick={() => publish.mutate(false)} loading={publish.isPending}>
+            <Button variant="secondary" className="border-0 bg-white/85 text-navy shadow-none dark:bg-surface dark:text-ink" onClick={() => publish.mutate(false)} loading={publish.isPending}>
               Hide results
             </Button>
           ) : (
@@ -946,7 +946,7 @@ function ResultsTab({ m }: { m: Manage }) {
               Publish results
             </Button>
           )}
-          <ButtonLink to={`/hackathons/${m.event.slug}/results`} variant="secondary" className="border-0 bg-white/85 text-navy shadow-none">
+          <ButtonLink to={`/hackathons/${m.event.slug}/results`} variant="secondary" className="border-0 bg-white/85 text-navy shadow-none dark:bg-surface dark:text-ink">
             {m.event.resultsPublished ? "View leaderboard" : "Preview leaderboard"}
           </ButtonLink>
         </div>
@@ -963,7 +963,7 @@ function ResultsTab({ m }: { m: Manage }) {
             <li key={jd.id} className="flex items-center gap-3 text-sm">
               <Avatar name={jd.name} color={jd.avatarColor} size={28} />
               <span className="flex-1 font-semibold">{jd.name}</span>
-              <span className={cn("font-semibold", jd.completed >= jd.assigned ? "text-mint-deep" : "text-ink-soft")}>
+              <span className={cn("font-semibold", jd.completed >= jd.assigned ? "text-mint-ink" : "text-ink-soft")}>
                 {jd.completed}/{jd.assigned}
               </span>
             </li>

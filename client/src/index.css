@@ -2,7 +2,7 @@
 @import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource-variable/figtree";
 
-/* Light is the product. Dark is an optional, reduced variant toggled from the profile menu. */
+/* data-theme is the resolved preference, including when following the device. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
@@ -14,6 +14,27 @@
   --line: #e3e6f5;
   --glass: rgb(255 255 255 / 0.64);
   --glass-line: rgb(255 255 255 / 0.85);
+  --violet-ink: #5a41e6;
+  --blue-ink: #1f5fd6;
+  --coral-ink: #c32c4a;
+  --sun-ink: #8a5a00;
+  --mint-ink: #0c745e;
+  --violet-tint: #ece8ff;
+  --blue-tint: #e3edff;
+  --coral-tint: #ffe6eb;
+  --sun-tint: #fff4d9;
+  --mint-tint: #ddf8f1;
+  --violet-hover: #dfd8ff;
+  --coral-hover: #ffd3dc;
+  --sun-hover: #ffbf3d;
+  --auth-clay: #ece8ff;
+  --focus: #7058f5;
+  --selection: #ffc85799;
+  --chart-violet: #7058f5;
+  --chart-blue: #4285ff;
+  --chart-coral: #ff7890;
+  --chart-mint: #3dcfae;
+  --chart-line: #5a41e6;
   color-scheme: light;
 }
 
@@ -26,6 +47,26 @@
   --line: #333a6b;
   --glass: rgb(30 35 69 / 0.7);
   --glass-line: rgb(255 255 255 / 0.08);
+  --violet-ink: #c9bfff;
+  --blue-ink: #9abeff;
+  --coral-ink: #ff9aac;
+  --sun-ink: #ffd477;
+  --mint-ink: #6de5c7;
+  --violet-tint: color-mix(in srgb, #7058f5 15%, var(--surface));
+  --blue-tint: color-mix(in srgb, #4285ff 15%, var(--surface));
+  --coral-tint: color-mix(in srgb, #ff7890 15%, var(--surface));
+  --sun-tint: color-mix(in srgb, #ffc857 15%, var(--surface));
+  --mint-tint: color-mix(in srgb, #3dcfae 15%, var(--surface));
+  --violet-hover: color-mix(in srgb, #7058f5 25%, var(--surface));
+  --coral-hover: color-mix(in srgb, #ff7890 25%, var(--surface));
+  --auth-clay: #34325c;
+  --focus: #c9bfff;
+  --selection: #6b501f;
+  --chart-violet: #ab96ff;
+  --chart-blue: #75a8ff;
+  --chart-coral: #ff9aac;
+  --chart-mint: #6de5c7;
+  --chart-line: #ab96ff;
   color-scheme: dark;
 }
 
@@ -36,6 +77,19 @@
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
+  --color-violet-ink: var(--violet-ink);
+  --color-blue-ink: var(--blue-ink);
+  --color-coral-ink: var(--coral-ink);
+  --color-sun-ink: var(--sun-ink);
+  --color-mint-ink: var(--mint-ink);
+  --color-violet-tint: var(--violet-tint);
+  --color-blue-tint: var(--blue-tint);
+  --color-coral-tint: var(--coral-tint);
+  --color-sun-tint: var(--sun-tint);
+  --color-mint-tint: var(--mint-tint);
+  --color-violet-hover: var(--violet-hover);
+  --color-coral-hover: var(--coral-hover);
+  --color-sun-hover: var(--sun-hover);
 }
 
 @theme {
@@ -93,12 +147,23 @@
     text-wrap: pretty;
   }
   :focus-visible {
-    outline: 3px solid var(--color-violet);
+    outline: 3px solid var(--focus);
     outline-offset: 2px;
     border-radius: 6px;
   }
   ::selection {
-    background: #ffc85799;
+    background: var(--selection);
+    color: var(--ink);
+  }
+  html[data-theme="dark"] {
+    scrollbar-color: var(--ink-soft) var(--canvas);
+  }
+  input[type="range"], input[type="checkbox"] {
+    accent-color: var(--violet-ink);
+  }
+  [data-theme="dark"] select option {
+    background: var(--surface);
+    color: var(--ink);
   }
 }
 
@@ -133,6 +198,12 @@
     inset -6px -10px 16px rgb(0 0 0 / 0.12),
     0 18px 30px -16px color-mix(in srgb, var(--clay, #7058f5) 70%, transparent);
 }
+[data-theme="dark"] .clay {
+  box-shadow:
+    inset 6px 8px 14px rgb(255 255 255 / 0.22),
+    inset -6px -10px 16px rgb(0 0 0 / 0.18),
+    0 18px 30px -16px rgb(0 0 0 / 0.5);
+}
 
 /* Neumorphism — tactile controls only */
 .neu {
@@ -147,10 +218,25 @@
     inset -3px -3px 7px rgb(255 255 255 / 0.85);
 }
 [data-theme="dark"] .neu {
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+  box-shadow: 4px 4px 10px rgb(0 0 0 / 0.28), -3px -3px 9px rgb(80 91 158 / 0.12);
 }
 [data-theme="dark"] .neu-pressed {
-  box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.4);
+  box-shadow: inset 3px 3px 7px rgb(0 0 0 / 0.4), inset -2px -2px 6px rgb(80 91 158 / 0.12);
+}
+/* The switch thumb must stay distinct from its track in dark mode. */
+[data-theme="dark"] [role="switch"] > span {
+  background: var(--ink);
+}
+[data-theme="dark"] [role="switch"][aria-checked="true"] > span {
+  background: var(--canvas);
+}
+label:has(input[type="file"]:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+[data-theme="dark"] .recharts-tooltip-item,
+[data-theme="dark"] .recharts-tooltip-label {
+  color: var(--ink) !important;
 }
 
 .tile {

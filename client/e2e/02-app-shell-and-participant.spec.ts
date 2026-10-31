@@ -44,7 +44,7 @@ test.describe("App Shell and Participant Workspace", () => {
     const accountBtn = page.getByRole("button", { name: "Account menu" });
     await accountBtn.click();
     await expect(page.getByRole("menuitem", { name: /Profile and settings/i })).toBeVisible();
-    await expect(page.getByRole("menuitem", { name: /Use dark mode|Use light mode/i })).toBeVisible();
+    await expect(page.getByRole("menuitemradio", { name: "Dark", exact: true })).toBeVisible();
     await expect(page.getByRole("menuitem", { name: /Sign out/i })).toBeVisible();
 
     // Close menu by clicking outside or pressing Escape
@@ -126,22 +126,16 @@ test.describe("App Shell and Participant Workspace", () => {
     await saveBtn.click();
     await expect(page.getByText("Profile saved")).toBeVisible();
 
-    // Dark mode toggle
-    const darkToggle = page.getByRole("switch", { name: "Dark mode" });
-    const isDark = (await page.locator("html").getAttribute("data-theme")) === "dark";
-    await darkToggle.click();
-    const isDarkAfter = (await page.locator("html").getAttribute("data-theme")) === "dark";
-    expect(isDarkAfter).not.toBe(isDark);
+    // Theme selection
+    await page.getByRole("radio", { name: "Dark", exact: true }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     // Reload page to test theme persistence
     await page.reload();
-    await expect(page.locator("html")).toHaveAttribute("data-theme", isDarkAfter ? "dark" : "light");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
-    // Toggle back to light mode
-    if (isDarkAfter) {
-      await page.getByRole("switch", { name: "Dark mode" }).click();
-      await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-    }
+    await page.getByRole("radio", { name: "Light", exact: true }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
     // Change password validation
     await page.getByLabel("Current password").fill("WrongCurrentPassword");

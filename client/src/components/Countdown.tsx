@@ -41,7 +41,7 @@ export function Countdown({ to, className, compact }: { to: string | Date; class
   return (
     <div className={cn("flex gap-2", className)} role="timer" aria-label={`${p.days} days, ${p.hours} hours, ${p.minutes} minutes remaining`}>
       {cells.map(([label, v]) => (
-        <div key={label} className="flex min-w-14 flex-col items-center rounded-2xl bg-white/70 px-2 py-2 dark:bg-white/10">
+        <div key={label} className="flex min-w-14 flex-col items-center rounded-2xl bg-white/70 px-2 py-2 text-ink dark:bg-surface">
           <span className="font-display text-2xl font-bold tabular-nums sm:text-3xl" aria-hidden>
             {String(v).padStart(2, "0")}
           </span>

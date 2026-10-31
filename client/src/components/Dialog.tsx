@@ -23,7 +23,7 @@ export function Dialog({
     <RD.Root open={open} onOpenChange={onOpenChange}>
       <RD.Portal>
         <RD.Overlay asChild>
-          <motion.div className="fixed inset-0 z-[140] bg-navy/30 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
+          <motion.div className="fixed inset-0 z-[140] bg-navy/30 backdrop-blur-sm dark:bg-black/60" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
         </RD.Overlay>
         <div className="pointer-events-none fixed inset-0 z-[150] grid place-items-end p-0 sm:place-items-center sm:p-4">
           <RD.Content asChild aria-describedby={description ? undefined : undefined}>

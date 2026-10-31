@@ -66,15 +66,15 @@ export default function TeamWorkspace() {
           <div className="mt-3 flex flex-wrap gap-2">
             <StageBadge stage={ev.stage} />
             <RegistrationBadge status={team.registration?.status} />
-            {w.permissions.isLeader && <Badge className="bg-sun-soft text-sun-deep">You lead this team</Badge>}
-            {w.permissions.isManager && !w.permissions.isMember && <Badge className="bg-blue-soft text-blue-deep">Organizer view</Badge>}
+            {w.permissions.isLeader && <Badge className="bg-sun-tint text-sun-ink">You lead this team</Badge>}
+            {w.permissions.isManager && !w.permissions.isMember && <Badge className="bg-blue-tint text-blue-ink">Organizer view</Badge>}
           </div>
         </div>
         {ev.stage !== "COMPLETED" && (
           <div className="glass rounded-[var(--radius-panel)] px-5 py-3">
             <p className="text-sm font-semibold text-ink-soft">{w.submissionOpen ? "Submissions close in" : new Date(w.deadline) < new Date() ? "Submissions closed" : "Submission deadline"}</p>
             {new Date(w.deadline) > new Date() ? <Countdown to={w.deadline} compact className="font-display text-2xl font-bold" /> : <p className="font-display text-xl font-bold">{fmtDateTime(w.deadline)}</p>}
-            {team.deadlineExtension && <p className="text-xs font-semibold text-mint-deep">Extension granted</p>}
+            {team.deadlineExtension && <p className="text-xs font-semibold text-mint-ink">Extension granted</p>}
           </div>
         )}
       </header>
@@ -173,7 +173,7 @@ function RegistrationTile({ w, onRegistered }: { w: Workspace; onRegistered: () 
         </div>
       )}
       {permissions.isLeader && status === "PENDING" && ["PUBLISHED", "REGISTRATION_OPEN"].includes(ev.stage) && (
-        <Button variant="secondary" size="sm" className="mt-4 border-0 bg-white/80 text-navy shadow-none" onClick={() => withdraw.mutate()} loading={withdraw.isPending}>
+        <Button variant="secondary" size="sm" className="mt-4 border-0 bg-white/80 text-navy shadow-none dark:bg-surface dark:text-ink" onClick={() => withdraw.mutate()} loading={withdraw.isPending}>
           Withdraw application
         </Button>
       )}
@@ -183,7 +183,7 @@ function RegistrationTile({ w, onRegistered }: { w: Workspace; onRegistered: () 
 
 /* ---------------- Challenge ---------------- */
 
-const DIFF = { EASY: "bg-mint-soft text-mint-deep", MEDIUM: "bg-sun-soft text-sun-deep", HARD: "bg-coral-soft text-coral-deep" } as const;
+const DIFF = { EASY: "bg-mint-tint text-mint-ink", MEDIUM: "bg-sun-tint text-sun-ink", HARD: "bg-coral-tint text-coral-ink" } as const;
 
 function ChallengeTile({ w }: { w: Workspace }) {
   const qc = useQueryClient();
@@ -244,7 +244,7 @@ function ChallengeTile({ w }: { w: Workspace }) {
                 <button
                   disabled={full || choose.isPending}
                   onClick={() => choose.mutate(pr.id)}
-                  className={cn("w-full rounded-2xl border-2 p-4 text-left transition-colors disabled:opacity-50", pr.id === team.problemId ? "border-violet bg-violet-soft/50" : "border-line hover:border-violet/50")}
+                  className={cn("w-full rounded-2xl border-2 p-4 text-left transition-colors disabled:opacity-50", pr.id === team.problemId ? "border-violet bg-violet-tint/50" : "border-line hover:border-violet/50")}
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge className="bg-navy text-white dark:bg-white dark:text-navy">{pr.code}</Badge>
@@ -343,7 +343,7 @@ function MembersTile({ w }: { w: Workspace }) {
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-1.5 truncate font-semibold">
                 {m.user.name}
-                {m.isLeader && <Crown className="size-4 text-sun-deep" aria-label="Team leader" />}
+                {m.isLeader && <Crown className="size-4 text-sun-ink" aria-label="Team leader" />}
               </p>
               <p className="truncate text-xs text-ink-soft">{m.user.skills || m.user.college || m.user.email}</p>
             </div>
@@ -352,7 +352,7 @@ function MembersTile({ w }: { w: Workspace }) {
                 <button className="rounded-lg p-1.5 text-ink-soft hover:bg-surface-2 hover:text-ink" onClick={() => transfer.mutate(m.userId)} aria-label={`Make ${m.user.name} the leader`} title="Make leader">
                   <Crown className="size-4" />
                 </button>
-                <button className="rounded-lg p-1.5 text-ink-soft hover:bg-coral-soft hover:text-coral-deep" onClick={() => remove.mutate(m.userId)} aria-label={`Remove ${m.user.name}`} title="Remove">
+                <button className="rounded-lg p-1.5 text-ink-soft hover:bg-coral-tint hover:text-coral-ink" onClick={() => remove.mutate(m.userId)} aria-label={`Remove ${m.user.name}`} title="Remove">
                   <X className="size-4" />
                 </button>
               </div>
@@ -366,7 +366,7 @@ function MembersTile({ w }: { w: Workspace }) {
           <h3 className="mb-2 text-sm font-bold">Join requests</h3>
           <ul className="space-y-2">
             {requests.map((r) => (
-              <li key={r.id} className="rounded-2xl bg-sun-soft/70 p-3 dark:bg-sun/10">
+              <li key={r.id} className="rounded-2xl bg-sun-tint/70 p-3 dark:bg-sun/10">
                 <div className="flex items-center gap-2">
                   <Avatar name={r.sender.name} color={r.sender.avatarColor} size={28} />
                   <p className="text-sm font-semibold">{r.sender.name}</p>
@@ -403,7 +403,7 @@ function MembersTile({ w }: { w: Workspace }) {
             </form>
           )}
           {inviteErr && (
-            <p id="invite-err" className="mt-2 text-sm font-medium text-coral-deep">
+            <p id="invite-err" className="mt-2 text-sm font-medium text-coral-ink">
               {inviteErr}
             </p>
           )}
@@ -414,7 +414,7 @@ function MembersTile({ w }: { w: Workspace }) {
                   <span className="truncate text-ink-soft">
                     Invited <span className="font-semibold text-ink">{i.recipient.name}</span> {relative(i.createdAt)}
                   </span>
-                  <button className="shrink-0 text-xs font-semibold text-coral-deep hover:underline" onClick={() => cancel.mutate(i.id)}>
+                  <button className="shrink-0 text-xs font-semibold text-coral-ink hover:underline" onClick={() => cancel.mutate(i.id)}>
                     Cancel
                   </button>
                 </li>
@@ -431,12 +431,12 @@ function MembersTile({ w }: { w: Workspace }) {
       {permissions.isMember && (
         <div className="mt-6 border-t border-line pt-4">
           {permissions.isLeader ? (
-            <Button variant="ghost" size="sm" className="text-coral-deep" onClick={() => setConfirmDelete(true)}>
+            <Button variant="ghost" size="sm" className="text-coral-ink" onClick={() => setConfirmDelete(true)}>
               <Trash2 className="size-4" aria-hidden /> Delete team
             </Button>
           ) : (
             rosterOpen && (
-              <Button variant="ghost" size="sm" className="text-coral-deep" onClick={() => user && remove.mutate(user.id)}>
+              <Button variant="ghost" size="sm" className="text-coral-ink" onClick={() => user && remove.mutate(user.id)}>
                 Leave team
               </Button>
             )
@@ -496,13 +496,13 @@ function MilestonesTile({ w }: { w: Workspace }) {
                   onClick={() => update(items.map((x) => (x.id === m.id ? { ...x, done: !x.done } : x)))}
                   aria-pressed={m.done}
                   aria-label={`${m.done ? "Mark not done" : "Mark done"}: ${m.label}`}
-                  className="text-mint-deep disabled:opacity-60"
+                  className="text-mint-ink disabled:opacity-60"
                 >
                   {m.done ? <CheckCircle2 className="size-5" /> : <Circle className="size-5 text-ink-soft" />}
                 </button>
                 <span className={cn("flex-1", m.done && "text-ink-soft line-through")}>{m.label}</span>
                 {editable && (
-                  <button onClick={() => update(items.filter((x) => x.id !== m.id))} className="rounded-lg p-1 text-ink-soft opacity-0 hover:text-coral-deep focus-visible:opacity-100 group-hover:opacity-100" aria-label={`Remove ${m.label}`}>
+                  <button onClick={() => update(items.filter((x) => x.id !== m.id))} className="rounded-lg p-1 text-ink-soft opacity-0 hover:text-coral-ink focus-visible:opacity-100 group-hover:opacity-100" aria-label={`Remove ${m.label}`}>
                     <X className="size-4" />
                   </button>
                 )}
@@ -671,7 +671,7 @@ function SubmissionTile({ w, onFinal }: { w: Workspace; onFinal: () => void }) {
           ))}
         </ul>
         {fieldErrors && (
-          <ul className="mt-3 space-y-1 rounded-xl bg-coral-soft p-3 text-sm text-coral-deep">
+          <ul className="mt-3 space-y-1 rounded-xl bg-coral-tint p-3 text-sm text-coral-ink">
             {Object.values(fieldErrors).map((m) => (
               <li key={m}>{m}</li>
             ))}
@@ -708,13 +708,13 @@ function SubmissionTile({ w, onFinal }: { w: Workspace; onFinal: () => void }) {
               <li key={s.id} className="rounded-2xl border border-line p-3">
                 <div className="flex items-center gap-2">
                   <span className="font-display font-bold">v{s.version}</span>
-                  {s.isFinal ? <Badge className="bg-mint-soft text-mint-deep">Final</Badge> : <Badge className="bg-surface-2 text-ink-soft">Snapshot</Badge>}
+                  {s.isFinal ? <Badge className="bg-mint-tint text-mint-ink">Final</Badge> : <Badge className="bg-surface-2 text-ink-soft">Snapshot</Badge>}
                   <time className="ml-auto text-xs text-ink-soft" dateTime={s.submittedAt}>
                     {fmtDateTime(s.submittedAt)}
                   </time>
                 </div>
                 {s.attachmentName && (
-                  <a href={apiUrl(`/teams/${team.id}/submissions/${s.id}/attachment`)} className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-violet-deep hover:underline dark:text-[#b7a9ff]">
+                  <a href={apiUrl(`/teams/${team.id}/submissions/${s.id}/attachment`)} className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-violet-ink hover:underline">
                     <Download className="size-4" aria-hidden /> {s.attachmentName}
                   </a>
                 )}
