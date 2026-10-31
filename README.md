@@ -354,9 +354,9 @@ Open **two terminals** in the project folder.
 ```bash
 cd server
 npm install
-cp .env.example .env        # Windows PowerShell: copy .env.example .env
-npm run setup               # generates Prisma client, creates dev.db, loads demo data
-npm run dev                 # http://localhost:4000
+Copy-Item .env.example .env      # Windows PowerShell: copy .env.example .env
+npm run setup                    # generates Prisma client, creates dev.db, loads demo data
+npm run dev                      # http://localhost:4000
 ```
 
 **Terminal 2: web app**
